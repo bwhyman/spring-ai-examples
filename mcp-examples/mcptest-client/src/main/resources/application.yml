@@ -1,0 +1,24 @@
+server:
+  port: 8081
+spring:
+  config:
+    import: classpath:application-secret.yml # 我的阿里apikey
+
+  ai:
+    mcp:
+      client:
+        toolcallback:
+          enabled: on
+        sse:
+          connections:
+            server1:
+              url: http://localhost:8080/
+    dashscope:
+      api-key: '你的阿里apikey'
+logging:
+  level:
+    root: info
+    org:
+      example: debug
+  pattern:
+    console: '%-5level %C.%M[%line] - %msg%n'
