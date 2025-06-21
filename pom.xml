@@ -11,6 +11,8 @@
 
     <modules>
         <module>mcp-examples</module>
+        <module>rag-examples</module>
+
     </modules>
 
 </project>

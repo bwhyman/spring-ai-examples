@@ -1,0 +1,24 @@
+spring:
+  config:
+    import: classpath:application-secret.yml # 我的阿里apikey
+  ai:
+    dashscope:
+      api-key: '你的阿里apikey'
+      embedding:
+        options:
+          model: 'text-embedding-v4' # 不显式声明，默认使用text-embedding-v1
+
+    vectorstore:
+      qdrant:
+        host: 192.168.1.31
+        collection-name: my-vectors
+        use-tls: false
+        initialize-schema: true
+
+logging:
+  level:
+    root: info
+    org:
+      example: debug
+  pattern:
+    console: '%-5level %C.%M[%line] - %msg%n'

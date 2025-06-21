@@ -6,9 +6,6 @@ LLM/MCP/spring-ai/mcp-server/mcp-client/spring-ai-alibaba
 
 MCP使用http+sse通信，sse的长连接是个缺陷，spring-ai与阿里提出Stramable HTTP实现方案，但当前没有其他厂商跟进。
 
-启动mcp-server。  
-启动mcp-client，/api/weathermessage接口接收数据；/test/http/包含http请求测试脚本。 
-
 ### Tech Stacks
 spring-boot: 3.5.0  
 - spring-boot-starter-webflux
@@ -19,7 +16,7 @@ spring-ai: 1.0.0
 
 spring-ai-alibaba-starter-dashscope: 1.0.0.2
 
-### spring-ai
+### spring-ai-mcp
 
 官网以1.0M6版本展示的示例代码，`spring-ai-mcp-server-webflux-spring-boot-starter`已在1.0正式版改为`spring-ai-starter-mcp-server-webflux`，致使项目错误。
 
@@ -48,6 +45,11 @@ spring-ai-alibaba-starter-dashscope: 1.0.0.2
 
 mcp服务，包含mcp-server/mcp-client。mcp-server通过暴露`提示词描述的功能函数`，对mcp-client提供服务。
 请求者无需了解服务的接口规范，通过mcp-client集成的大模型，解析自然语言确定应访问的mcp-server功能，获取服务。与微服务相似，mcp服务也可以彼此互交。
+
+### Testings
+
+启动mcp-server。  
+启动mcp-client，/api/weathermessage接口接收数据；/test/http/包含http请求测试脚本。
 
 ### Update
 
