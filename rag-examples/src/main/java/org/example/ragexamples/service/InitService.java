@@ -1,5 +1,7 @@
 package org.example.ragexamples.service;
 
+import io.qdrant.client.QdrantClient;
+import io.qdrant.client.grpc.Collections;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.document.Document;
@@ -12,7 +14,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class InitService {
 
     // 启动时，将手册插入qdrant数据库
     @EventListener(ApplicationReadyEvent.class)
-    public void initHandbook() throws IOException {
+    public void initHandbook() throws Exception {
         String script = handbook.getContentAsString(Charset.defaultCharset());
         String firstLine = script.split("\\R", 2)[0];
         // 取第一个模块名称，判断数据库是否已经存在
@@ -44,6 +45,21 @@ public class InitService {
         if (!documents.isEmpty()) {
             return;
         }
+        Optional<QdrantClient> nativeClient = vectorStore.getNativeClient();
+        if (nativeClient.isEmpty()) {
+            return;
+        }
+        // 为`title`字段添加索引
+        nativeClient.get()
+                .createPayloadIndexAsync(
+                "my-vectors",
+                "title",
+                Collections.PayloadSchemaType.Keyword,
+                null,
+                true,
+                null,
+                null)
+                .get();
         //
         String[] split = script.split("\\r?\\n\\s*\\r?\\n");
         List<Document> docs = new ArrayList<>();

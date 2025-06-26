@@ -2,7 +2,12 @@
 
 ### Introductions
 
-RAG/embedding/vector/
+RAG/embedding/vector/vector database
+
+一些思考：  
+要理解为什么用`embedding`而不是`vectorization`。  
+spring-ai虽然隔离了实现，但切换底层实现模型成本依然很高。
+一旦换了向量模型，向量必须重新计算，否则无法计算相似度；已经反复调式的参数，也必须重新测试调整。
 
 ### Tech Stacks
 spring-boot: 3.5.0
@@ -51,10 +56,14 @@ QuestionAnswerAdvisor包含默认Prompt模板，PromptTemplate类可以自定义
 
 ### Testings
 
+启动qdrant向量数据库。  
 resources/handbook.txt，模拟一个简单的员工手册。  
 InitService类，启动时读取员工手册，并插入向量数据库，基于meta判断避免重复提交。  
-HandbookService类，接收提问，基于RAG响应结果。参数：0.4相似度，3项。     
+HandbookService类，接收提问，基于RAG响应结果。参数：0.4相似度，前3项。     
 HandbookServiceTest测试类。  
 
 `我有张发票已经搁置40天了，还能报销么？`，响应结果：  
 `根据报销流程中的规定，“超过一个月未报销的发票将不予受理。” 如果您的发票已经搁置了40天，即超过了1个月的时间，按照该规定，这张发票可能无法再进行报销。建议您尽快咨询财务部门以确认具体细节。`
+
+`请问，有多长时间的午休时间？`，响应结果：  
+`根据提供的信息，午休时间为 1 小时，从中午 12:00 到 13:00。`

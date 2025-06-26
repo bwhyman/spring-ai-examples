@@ -14,7 +14,7 @@ spring-ai，将基于 Java 开发 AI 应用的方式，拉低到傻瓜级难度.
 
 spring-ai-alibaba-starter-dashscope: 1.0.0.2
 
-- chatmodel，`qwen-plus`
+- Chat Model，`qwen-plus`
 - Embedding Model，`text-embedding-v4`
 
 ### Examples

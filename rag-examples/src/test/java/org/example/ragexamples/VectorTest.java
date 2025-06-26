@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 @Slf4j
@@ -53,8 +54,8 @@ public class VectorTest {
 
         store.similaritySearch(req)
                 .forEach(doc -> {
-            log.debug("{}, score: {}", doc.getText(), doc.getScore());
-        });
+                    log.debug("{}, score: {}", doc.getText(), doc.getScore());
+                });
     }
 
 
@@ -66,6 +67,7 @@ public class VectorTest {
         vectorStore.add(List.of(new Document("管理员功能模块，添加用户功能")));
         vectorStore.add(List.of(new Document("管理员功能模块，更改用户权限")));
     }
+
     @Test
     void test4() {
         SearchRequest req = SearchRequest.builder()
@@ -79,6 +81,7 @@ public class VectorTest {
                     log.debug("{}, score: {}", doc.getText(), doc.getScore());
                 });
     }
+
     @Test
     void addDocument2() {
         vectorStore.add(List.of(new Document("苹果手机")));
@@ -121,5 +124,71 @@ public class VectorTest {
                 .forEach(doc -> {
                     log.debug("{}, score: {}", doc.getText(), doc.getScore());
                 });
+    }
+
+    @Test
+    void addStudents() {
+        var d1 = new Document("""
+                {
+                "java": "80",
+                "sex": "男"
+                }
+                """, Map.of("userid", "2020212814"));
+        var d2 = new Document("""
+                {
+                "java": "80",
+                "sex": "男"
+                }
+                """);
+        var d3 = new Document("""
+                {
+                "java": "80",,
+                "sex": "男"
+                }
+                """);
+        var d4 = new Document("""
+                {
+                "java": "80",
+                "sex": "男"
+                }
+                """);
+        var d5 = new Document("""
+                {
+                "userid": "2022212818",
+                "sex": "男"
+                }
+                """);
+        var g1 = new Document("""
+                {
+                "java": "80",
+                "sex": "女"
+                }
+                """);
+        var g2 = new Document("""
+                {
+                "java": "80",
+                "sex": "女"
+                }
+                """);
+        var g3 = new Document("""
+                {
+                "java": "80",
+                "sex": "女"
+                }
+                """);
+        var g4 = new Document("""
+                {
+                "java": "80",
+                "sex": "女"
+                }
+                """);
+        var g5 = new Document("""
+                {
+                "java": "80",
+                "sex": "女"
+                }
+                """);
+
+    vectorStore.add(List.of(d1,d2,d3,d4,d5,g1,g2,g3,g4,g5));
     }
 }
